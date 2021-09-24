@@ -262,4 +262,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-.vs/crm-fun-opportunity-sync-storage/v16/.suo
+*.vs/crm-fun-opportunity-sync-storage/v16/.suo
