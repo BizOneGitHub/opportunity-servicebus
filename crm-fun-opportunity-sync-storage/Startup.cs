@@ -33,7 +33,7 @@ namespace Crm
                     TimeSpan.FromSeconds(10)
                 });
 
-             builder.Services.AddHttpClient("Opportunity", client =>
+             builder.Services.AddHttpClient("Crm", client =>
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             }).AddPolicyHandler(retryPolicy)

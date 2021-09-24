@@ -18,17 +18,13 @@ namespace Crm.Service
         public CrmImport(ILogger<CrmImport> log, IHttpClientFactory httpClientFactory, ServiceBusClient serviceBusClient)
         {
             _log = log;
-            //_config = config;
             _serviceBusClient = serviceBusClient;
-            _client = httpClientFactory.CreateClient("Opportunity");
+            _client = httpClientFactory.CreateClient("Crm");
 
         }
 
         public async Task HandleMessage(string bodyMsg, System.Collections.Generic.IDictionary<string, object> userProperties)
         {
-
-
-
             // Get from queue
             dynamic message = JToken.Parse(bodyMsg);
             string urlToCusomerBase = message?.Message?.Url + message?.Message?.RecordID;
@@ -37,9 +33,8 @@ namespace Crm.Service
 
             // Get data from urlToCusomerBase
             var baseInfo = await GetCustomerBaseInfo(urlToCusomerBase);
-
-            await SendMessageToStorageAsync(baseInfo);
-
+            string jsonSBSMetatdata = "{ \n\"SBSMetatdata\":" + bodyMsg + ",\n" + baseInfo.Trim().Substring(1);
+            await SendMessageToStorageAsync(jsonSBSMetatdata);
         }
 
        private async Task SendMessageToStorageAsync(string bodyMsg)
@@ -47,22 +42,20 @@ namespace Crm.Service
             try
             {
                 //connection storage account
-                string connectionStringStorageAccount = "DefaultEndpointsProtocol=https;AccountName=stgoppsea;AccountKey=CsXAMQCw1+AzOs1KE3sgl74CX+7qU5cWx9zXZUNDLJEoWWR56JPh+eRfdNcxzObFnfGApJh44CVIoywjEetr7A==;EndpointSuffix=core.windows.net";
-                string containerName = "fileoppurtunity";
-  
-               BlobContainerClient containerClient = new BlobContainerClient(connectionStringStorageAccount, containerName);
+                var connectionStringStorageAccount = Environment.GetEnvironmentVariable("ConnectionStringStorageAccount");
+                var containerName = Environment.GetEnvironmentVariable("ContainerName");
+
+                BlobContainerClient containerClient = new BlobContainerClient(connectionStringStorageAccount, containerName);
 
                 //create file name
                 var blobClient = containerClient.GetBlobClient("opportunity_" + Guid.NewGuid().ToString() + ".json");
-                Console.WriteLine(Guid.NewGuid().ToString());
 
                 // create Stream and upload file into storage account with containerClient
                 byte[] byteArray = Encoding.ASCII.GetBytes(bodyMsg);
                 using (MemoryStream strm = new MemoryStream(byteArray))
                 {
                     await blobClient.UploadAsync(strm);
-                }
-                         
+                }                         
 
             }
             catch (System.Exception ex)

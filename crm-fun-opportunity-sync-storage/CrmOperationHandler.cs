@@ -41,11 +41,11 @@ namespace Crm
 
         private async Task<string> PerformAuthorization()
         {
-            var clientId = Environment.GetEnvironmentVariable("clientId");
-            var clientSecret = Environment.GetEnvironmentVariable("clientSecret");
-            var scope = Environment.GetEnvironmentVariable("scope");
-            var apiOauth2 = Environment.GetEnvironmentVariable("apiOauth2");
-            var grantType = Environment.GetEnvironmentVariable("grantType");
+            var clientId = Environment.GetEnvironmentVariable("ClientId");
+            var clientSecret = Environment.GetEnvironmentVariable("ClientSecret");
+            var scope = Environment.GetEnvironmentVariable("Scope");
+            var apiOauth2 = Environment.GetEnvironmentVariable("ApiOauth2");
+            var grantType = Environment.GetEnvironmentVariable("GrantType");
 
 
             var dict = new Dictionary<string, string>();
