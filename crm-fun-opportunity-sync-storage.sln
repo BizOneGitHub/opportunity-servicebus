@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "crm-fun-opportunity-sync-storage", "crm-fun-opportunity-sync-storage\crm-fun-opportunity-sync-storage.csproj", "{C640BD14-4CBC-4C60-8DD8-A7D2BD5A5746}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBusTopic", "ServiceBusTopic\ServiceBusTopic.csproj", "{48D3DD3E-4105-4010-B7D1-C66787B6C6E3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionTopicReceive", "ServiceBusReceive\SubscriptionTopicReceive.csproj", "{2BD70FEB-13B7-4B60-84BD-D915A80CAC3E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{C640BD14-4CBC-4C60-8DD8-A7D2BD5A5746}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C640BD14-4CBC-4C60-8DD8-A7D2BD5A5746}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C640BD14-4CBC-4C60-8DD8-A7D2BD5A5746}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48D3DD3E-4105-4010-B7D1-C66787B6C6E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48D3DD3E-4105-4010-B7D1-C66787B6C6E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48D3DD3E-4105-4010-B7D1-C66787B6C6E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48D3DD3E-4105-4010-B7D1-C66787B6C6E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2BD70FEB-13B7-4B60-84BD-D915A80CAC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BD70FEB-13B7-4B60-84BD-D915A80CAC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BD70FEB-13B7-4B60-84BD-D915A80CAC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BD70FEB-13B7-4B60-84BD-D915A80CAC3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

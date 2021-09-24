@@ -5,20 +5,20 @@ using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Opportunity.Service;
+using Crm.Service;
 
-namespace Opportunity.Function
+namespace Crm.Function
 {
     public class CrmOppotunityTrigger
     {
         private readonly ILogger<CrmOppotunityTrigger> _log;
 
-        //private readonly ICustomerImport _customerImport;
+        private readonly ICrmImport _crmImport;
 
-        public CrmOppotunityTrigger(ILogger<CrmOppotunityTrigger> log)
+        public CrmOppotunityTrigger(ILogger<CrmOppotunityTrigger> log, ICrmImport crmImport)
         {
             _log = log;
-           // _customerImport = customerImport;
+            _crmImport = crmImport;
         }
 
         [FunctionName("CrmOppotunityTrigger")]
@@ -28,15 +28,13 @@ namespace Opportunity.Function
            )
         {
             try
-            {
-                Console.WriteLine($"Process procpect message {Encoding.UTF8.GetString(sbMessage.Body)}");
-                _log.LogInformation($"Process procpect message {sbMessage.Body}");
-                //await _customerImport.HandleMessage(Encoding.UTF8.GetString(sbMessage.Body), sbMessage.UserProperties);
+            {              
+                await _crmImport.HandleMessage(Encoding.UTF8.GetString(sbMessage.Body), sbMessage.UserProperties);
             }
             catch (System.Exception ex)
             {
                 _log.LogError(ex, "Error");
-                //await messageReceiver.DeadLetterAsync(lockToken);
+               // await messageReceiver.DeadLetterAsync();
                 throw new System.Exception("Error handling prospect");
             }
         }

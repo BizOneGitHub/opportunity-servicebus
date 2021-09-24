@@ -1,31 +1,47 @@
 ﻿using System;
-using Azure.Messaging.ServiceBus;
+using System.Net.Http.Headers;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Web;
-using Opportunity.Service;
+using Polly;
+using Polly.Extensions.Http;
+using Azure.Messaging.ServiceBus;
+using System.Net;
+using Crm.Service;
 
+[assembly: FunctionsStartup(typeof(Crm.Startup))]
 
-[assembly: FunctionsStartup(typeof(Opportunity.Startup))]
-
-namespace Opportunity
+namespace Crm
 {
     public class Startup : FunctionsStartup
     {
 
-      //  IConfiguration Configuration { get; set; }
+       
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
-           // Configuration = builder.GetContext().Configuration;
-            //builder.Services.AddMicrosoftIdentityWebApiAuthentication(Configuration, "AzureAd");
+           
 
-            //builder.Services.AddSingleton<ICustomerImport, CustomerImport>();
+            builder.Services.AddSingleton<ICrmImport, CrmImport>();
 
+          var retryPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(response => response.StatusCode == HttpStatusCode.Unauthorized)
+                .WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10)
+                });
+
+             builder.Services.AddHttpClient("Opportunity", client =>
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            }).AddPolicyHandler(retryPolicy)
+            .AddHttpMessageHandler<CrmOperationHandler>();
+            builder.Services.AddTransient<CrmOperationHandler>();
             // Add ServiceBus Client, can be done better....
-           /* var connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
-            builder.Services.AddSingleton<ServiceBusClient>(new ServiceBusClient(connectionString));*/
+            var connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
+            builder.Services.AddSingleton<ServiceBusClient>(new ServiceBusClient(connectionString));
 
         }
     }
