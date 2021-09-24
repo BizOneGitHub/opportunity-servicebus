@@ -33,7 +33,7 @@ namespace Crm.Service
 
             // Get data from urlToCusomerBase
             var baseInfo = await GetCustomerBaseInfo(urlToCusomerBase);
-            string jsonSBSMetatdata = "{ \n\"SBSMetadata\":" + bodyMsg + ",\n" + baseInfo.Trim().Substring(1);
+            string jsonSBSMetatdata = "{\"SBSMetadata\":" + bodyMsg + "," + baseInfo.Trim().Substring(1);
             await SendMessageToStorageAsync(jsonSBSMetatdata);
         }
 
