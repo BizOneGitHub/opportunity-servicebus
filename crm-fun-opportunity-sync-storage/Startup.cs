@@ -7,7 +7,6 @@ using Polly.Extensions.Http;
 using Azure.Messaging.ServiceBus;
 using System.Net;
 using Crm.Service;
-
 [assembly: FunctionsStartup(typeof(Crm.Startup))]
 
 namespace Crm
@@ -23,7 +22,9 @@ namespace Crm
 
             builder.Services.AddSingleton<ICrmImport, CrmImport>();
 
-          var retryPolicy = HttpPolicyExtensions
+            builder.Services.AddSingleton<ICrmDeadLetterHandler, CrmDeadLetterHandler>();
+
+            var retryPolicy = HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .OrResult(response => response.StatusCode == HttpStatusCode.Unauthorized)
                 .WaitAndRetryAsync(new[]

@@ -15,6 +15,7 @@ namespace Crm.Service
         private readonly ILogger<CrmImport> _log;
         private readonly ServiceBusClient _serviceBusClient;
         private readonly HttpClient _client;
+
         public CrmImport(ILogger<CrmImport> log, IHttpClientFactory httpClientFactory, ServiceBusClient serviceBusClient)
         {
             _log = log;
@@ -23,14 +24,15 @@ namespace Crm.Service
 
         }
 
-        public async Task HandleMessage(string bodyMsg, System.Collections.Generic.IDictionary<string, object> userProperties)
+        public async Task HandleMessage(string bodyMsg)
         {
+            
             // Get from queue
             dynamic message = JToken.Parse(bodyMsg);
             string urlToCusomerBase = message?.Message?.Url + message?.Message?.RecordID;
 
             if (String.IsNullOrEmpty(urlToCusomerBase)) return;
-
+        
             // Get data from urlToCusomerBase
             var baseInfo = await GetCustomerBaseInfo(urlToCusomerBase);
             string jsonSBSMetatdata = "{\"SBSMetadata\":" + bodyMsg + "," + baseInfo.Trim().Substring(1);
@@ -61,7 +63,7 @@ namespace Crm.Service
             catch (System.Exception ex)
             {
                 _log.LogError($"Could not send to Change parent Topic", ex);
-               // throw new Exception("Could not send to file into storage account", ex);
+                throw new Exception("Could not send to file into storage account", ex);
             }
         }
       
