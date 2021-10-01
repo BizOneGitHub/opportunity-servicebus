@@ -68,7 +68,7 @@ namespace Crm.Service
             }
             catch (System.Exception ex)
             {
-                _log.LogError(ex, "Error");
+                _log.LogError(ex, "HandleDeadletter Error");
 
                 throw new System.Exception("HandleDeadletter", ex);
             }
