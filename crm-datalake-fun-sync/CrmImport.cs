@@ -49,7 +49,7 @@ namespace Crm.Service
 
                 BlobContainerClient containerClient = new BlobContainerClient(connectionStringStorageAccount, containerName);
 
-                string fileName = Environment.GetEnvironmentVariable("folderFileStoreMetadata") + Environment.GetEnvironmentVariable("TopicName") + Guid.NewGuid().ToString() + ".json";
+                string fileName = Environment.GetEnvironmentVariable("folderFileStoreMetadata") + "/" + Environment.GetEnvironmentVariable("TopicName") + Guid.NewGuid().ToString() + ".json";
                 //create file name
                 var blobClient = containerClient.GetBlobClient(fileName);
 
