@@ -62,7 +62,7 @@ namespace Crm.Service
             }
             catch (System.Exception ex)
             {
-                _log.LogError($"Could not send to Change parent Topic", ex);
+                _log.LogError($"Could not send to file into storage account", ex);
                 throw new Exception("Could not send to file into storage account", ex);
             }
         }
@@ -82,8 +82,8 @@ namespace Crm.Service
                 else
                 {
                     // Handle failure
-                    _log.LogError("Could not read addresses");
-                    throw new Exception("Could not read addresses");
+                    _log.LogError("Could not read api");
+                    throw new Exception("Could not read api");
                 }
             }
             var baseInfo = await response.Content.ReadAsStringAsync();
