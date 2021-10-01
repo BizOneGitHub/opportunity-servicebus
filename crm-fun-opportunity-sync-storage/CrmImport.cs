@@ -30,11 +30,11 @@ namespace Crm.Service
             // Get from queue
             dynamic message = JToken.Parse(bodyMsg);
             string urlToCusomerBase = message?.Message?.Url + message?.Message?.RecordID;
-
+           
             if (String.IsNullOrEmpty(urlToCusomerBase)) return;
         
-            // Get data from urlToCusomerBase
-            var baseInfo = await GetCustomerBaseInfo(urlToCusomerBase);
+            // Get data from url opportunity
+            var baseInfo = await GetOpportunityBaseInfo(urlToCusomerBase);
             string jsonSBSMetatdata = "{\"SBSMetadata\":" + bodyMsg + "," + baseInfo.Trim().Substring(1);
             await SendMessageToStorageAsync(jsonSBSMetatdata);
         }
@@ -67,9 +67,9 @@ namespace Crm.Service
             }
         }
       
-        private async Task<string> GetCustomerBaseInfo(string urlToCusomerBase)
+        private async Task<string> GetOpportunityBaseInfo(string urlToOpportunityBase)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, urlToCusomerBase);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, urlToOpportunityBase);
 
             var response = await _client.SendAsync(request);
             if (!response.IsSuccessStatusCode)

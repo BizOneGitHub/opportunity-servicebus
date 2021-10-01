@@ -16,7 +16,6 @@ namespace Crm.Function
         private readonly ICrmImport _crmImport;
 
         private readonly ICrmDeadLetterHandler _crmDeadLetterHandler;
-
         public CrmOppotunityTrigger(ILogger<CrmOppotunityTrigger> log, ICrmImport crmImport, ICrmDeadLetterHandler crmDeadLetterHandler)
         {
             _log = log;
@@ -25,7 +24,7 @@ namespace Crm.Function
         }
 
         [FunctionName("CrmOppotunityTrigger")]
-        public async Task Run([ServiceBusTrigger("opportunity", "opp-test", Connection = "ServiceBusConnectionString", IsSessionsEnabled = false)] Message sbMessage
+        public async Task Run([ServiceBusTrigger("%TopicName%", "%SubscripionName%", Connection = "ServiceBusConnectionString", IsSessionsEnabled = false)] Message sbMessage
            , MessageReceiver messageReceiver
             , string lockToken
            )

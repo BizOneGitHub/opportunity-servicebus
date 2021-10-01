@@ -12,8 +12,8 @@ namespace Crm.Service
         private readonly ILogger<CrmDeadLetterHandler> _log;
 
         private readonly ICrmImport _crmImport;
-        private readonly string topicName = "opportunity";
-        private readonly string subscriptionName = "opp-test/$deadletterqueue";
+        private readonly string topicName = "";
+        private readonly string subscriptionName = "";
         private readonly ServiceBusClient _serviceBusClient;
 
         public CrmDeadLetterHandler(ILogger<CrmDeadLetterHandler> log, ServiceBusClient serviceBusClient, ICrmImport crmImport)
@@ -21,7 +21,9 @@ namespace Crm.Service
             _log = log;
             _serviceBusClient = serviceBusClient;
             _crmImport = crmImport;
-        }
+             topicName = Environment.GetEnvironmentVariable("TopicName");
+             subscriptionName = Environment.GetEnvironmentVariable("SubscripionName") + "/$deadletterqueue";
+    }
         
         public async Task HandleDeadletter()
         {
