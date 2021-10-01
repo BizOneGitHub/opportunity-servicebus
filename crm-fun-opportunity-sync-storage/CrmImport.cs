@@ -82,8 +82,8 @@ namespace Crm.Service
                 else
                 {
                     // Handle failure
-                    _log.LogError("Could not read api");
-                    throw new Exception("Could not read api");
+                    _log.LogError("Could not read addresses");
+                    throw new Exception("Could not read addresses");
                 }
             }
             var baseInfo = await response.Content.ReadAsStringAsync();
