@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "crm-fun-opportunity-sync-storage", "crm-fun-opportunity-sync-storage\crm-fun-opportunity-sync-storage.csproj", "{C640BD14-4CBC-4C60-8DD8-A7D2BD5A5746}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "crm-datalake-fun-sync", "crm-datalake-fun-sync\crm-datalake-fun-sync.csproj", "{C640BD14-4CBC-4C60-8DD8-A7D2BD5A5746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

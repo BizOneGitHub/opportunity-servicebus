@@ -33,7 +33,7 @@ namespace Crm.Service
            
             if (String.IsNullOrEmpty(urlToCusomerBase)) return;
 
-            // Get data from url opportunity
+            // Get data from url
             var baseInfo = await GetMetadataInfoOfAPI(urlToCusomerBase);
             string jsonSBSMetatdata = "{\"SBSMetadata\":" + bodyMsg + "," + baseInfo.Trim().Substring(1);
             await SendMessageToStorageAsync(jsonSBSMetatdata);
@@ -49,8 +49,9 @@ namespace Crm.Service
 
                 BlobContainerClient containerClient = new BlobContainerClient(connectionStringStorageAccount, containerName);
 
+                string fileName = Environment.GetEnvironmentVariable("folderFileStoreMetadata") + Environment.GetEnvironmentVariable("TopicName") + Guid.NewGuid().ToString() + ".json";
                 //create file name
-                var blobClient = containerClient.GetBlobClient(Environment.GetEnvironmentVariable("TopicName") + Guid.NewGuid().ToString() + ".json");
+                var blobClient = containerClient.GetBlobClient(fileName);
 
                 // create Stream and upload file into storage account with containerClient
                 byte[] byteArray = Encoding.ASCII.GetBytes(bodyMsg);
