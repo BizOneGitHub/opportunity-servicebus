@@ -32,7 +32,7 @@ namespace Crm.Service
             string urlToCusomerBase = message?.Message?.Url + message?.Message?.RecordID;
            
             if (String.IsNullOrEmpty(urlToCusomerBase)) return;
-        
+
             // Get data from url opportunity
             var baseInfo = await GetMetadataInfoOfAPI(urlToCusomerBase);
             string jsonSBSMetatdata = "{\"SBSMetadata\":" + bodyMsg + "," + baseInfo.Trim().Substring(1);
