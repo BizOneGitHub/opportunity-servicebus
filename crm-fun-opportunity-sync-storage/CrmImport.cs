@@ -34,7 +34,7 @@ namespace Crm.Service
             if (String.IsNullOrEmpty(urlToCusomerBase)) return;
         
             // Get data from url opportunity
-            var baseInfo = await GetOpportunityBaseInfo(urlToCusomerBase);
+            var baseInfo = await GetMetadataInfoOfAPI(urlToCusomerBase);
             string jsonSBSMetatdata = "{\"SBSMetadata\":" + bodyMsg + "," + baseInfo.Trim().Substring(1);
             await SendMessageToStorageAsync(jsonSBSMetatdata);
         }
@@ -67,7 +67,7 @@ namespace Crm.Service
             }
         }
       
-        private async Task<string> GetOpportunityBaseInfo(string urlToOpportunityBase)
+        private async Task<string> GetMetadataInfoOfAPI(string urlToOpportunityBase)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, urlToOpportunityBase);
 
