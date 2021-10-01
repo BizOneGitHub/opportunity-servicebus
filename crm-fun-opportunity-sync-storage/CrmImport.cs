@@ -50,7 +50,7 @@ namespace Crm.Service
                 BlobContainerClient containerClient = new BlobContainerClient(connectionStringStorageAccount, containerName);
 
                 //create file name
-                var blobClient = containerClient.GetBlobClient("opportunity_" + Guid.NewGuid().ToString() + ".json");
+                var blobClient = containerClient.GetBlobClient(Environment.GetEnvironmentVariable("TopicName") + Guid.NewGuid().ToString() + ".json");
 
                 // create Stream and upload file into storage account with containerClient
                 byte[] byteArray = Encoding.ASCII.GetBytes(bodyMsg);
